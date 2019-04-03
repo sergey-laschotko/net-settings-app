@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { BaseService } from "../base.service";
 
 @Component({
   selector: 'app-ethernet-settings',
@@ -14,12 +15,30 @@ export class EthernetSettingsComponent implements OnInit {
   preferredDNSServer: string = "";
   alternativeDNSServer: string = "";
 
-  constructor() { }
+  constructor(private base: BaseService) { }
 
   ngOnInit() {
+    this.getLastSettings();
+  }
+
+  getLastSettings() {
+    this.base.getLastSettings()
+      .subscribe((result: any) => {
+        if (result) {
+          this.autoIP = result.ethernet.autoIP;
+          this.ipAddress = result.ethernet.ipAddress;
+          this.subnetMask = result.ethernet.subnetMask;
+          this.defaultGateway = result.ethernet.defaultGateway;
+          this.autoDNS = result.ethernet.autoDNS;
+          this.preferredDNSServer = result.ethernet.preferredDNSServer;
+          this.alternativeDNSServer = result.ethernet.alternativeDNSServer;
+        }
+      });
   }
 
   getSettings(event: any) {
-    console.log(event);
+    if (event) {
+      this.base.transferSettings(event);
+    }
   }
 }

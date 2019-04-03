@@ -35,7 +35,7 @@
       <div class="wifi-security_backdrop" *ngIf="!wifiSecurity"></div>
       <p class="input-row">
         <label>Security Key: <span class="required">*</span></label>
-        <input type="password" [ngClass]="{ 'invalid': emptyWifiSecurityKey }" [(ngModel)]="wifiSecurityKey" (ngModelChange)="onWifiSecurityKeyInput()" />
+        <input type="text" [ngClass]="{ 'invalid': emptyWifiSecurityKey }" [(ngModel)]="wifiSecurityKey" (ngModelChange)="onWifiSecurityKeyInput()" />
       </p>
     </div>
   <app-general-settings

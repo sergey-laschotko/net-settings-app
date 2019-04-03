@@ -1,4 +1,7 @@
 <div class="form">
+  <div class="saved-success" *ngIf="savedSuccessfully">
+    <p class="saved-success_text">Saved Successfully</p>
+  </div>
   <div class="settings">
     <app-ethernet-settings class="settings_block"></app-ethernet-settings>
     <app-wifi-settings class="settings_block"></app-wifi-settings>

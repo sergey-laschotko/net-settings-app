@@ -32,52 +32,16 @@ export class WifiSettingsComponent implements OnInit {
 
   ngOnInit() {
     this.getWifies();
+    this.getLastSettings();
     this.base.saving
       .subscribe((event: string) => {
-        let invalid = false;
-        if (this.wifiEnabled && !this.wifiNet) {
-          this.emptyWifiNet = true;
-          invalid = true;
-        }
-        if (this.wifiSecurity && !this.wifiSecurityKey) {
-          this.emptyWifiSecurityKey = true;
-          invalid = true;
-        }
-        if (invalid) {
-          return false;
-        }
-        if (!this.settings) {
-          return false;
-        }
-        if (event === "saving") {
-          let settings = {
-            wifiEnabled: this.wifiEnabled,
-            wifiNet: this.wifiNet,
-            wifiSecurity: this.wifiSecurity,
-            wifiSecurityKey: this.wifiSecurityKey,
-            autoIP: this.settings.autoIP,
-            ipAddress: this.settings.ipAddress,
-            subnetMask: this.settings.subnetMask,
-            defaultGateway: this.settings.defaultGateway,
-            autoDNS: this.settings.autoDNS,
-            preferredDNSServer: this.settings.preferredDNSServer,
-            alternativeDNSServer: this.settings.alternativeDNSServer
-          };
-
-          console.log(settings);
-        } else if (event === "cancel") {
+         if (event === "cancel") {
           this.wifiEnabled = false;
           this.wifiSecurity = false;
           this.showWifiVariants = false;
           this.wifiNet = "";
           this.wifiVariants = [];
-          this.autoIP = true;
-          this.ipAddress = "";
-          this.subnetMask = "";
-          this.defaultGateway = "";
-          this.autoDNS = true;
-          this.preferredDNSServer = "";
-          this.alternativeDNSServer = "";
+          this.generalSettings.clearForm();
         }
       });
   }
@@ -98,12 +62,32 @@ export class WifiSettingsComponent implements OnInit {
       });
   }
 
+  getLastSettings() {
+    this.base.getLastSettings()
+      .subscribe((result: any) => {
+        if (result) {
+          this.wifiEnabled = result.wifi.wifiEnabled;
+          this.wifiNet = result.wifi.wifiNet;
+          this.wifiSecurity = result.wifi.wifiSecurity;
+          this.wifiSecurityKey = result.wifi.wifiSecurityKey;
+          this.autoIP = result.wifi.autoIP;
+          this.ipAddress = result.wifi.ipAddress;
+          this.subnetMask = result.wifi.subnetMask;
+          this.defaultGateway = result.wifi.defaultGateway;
+          this.autoDNS = result.wifi.autoDNS;
+          this.preferredDNSServer = result.wifi.preferredDNSServer;
+          this.alternativeDNSServer = result.wifi.alternativeDNSServer;
+        }
+      });
+  }
+
   toggleWifi() {
     this.wifiEnabled = !this.wifiEnabled;
     if (!this.wifiEnabled) {
       this.wifiNet = "";
       this.wifiSecurity = false;
       this.wifiSecurityKey = "";
+      this.showWifiVariants = false;
       this.generalSettings.clearForm();
     }
   }
@@ -124,8 +108,38 @@ export class WifiSettingsComponent implements OnInit {
     this.emptyWifiNet = false;
   }
 
-  getSettings(settings: any) {
-    this.settings = settings;
+  getSettings(generalSettings: any) {
+    this.settings = null;
+    this.settings = generalSettings;
+    let invalid = false;
+    if (this.wifiEnabled && !this.wifiNet) {
+      this.emptyWifiNet = true;
+      invalid = true;
+    }
+    if (this.wifiSecurity && !this.wifiSecurityKey) {
+      this.emptyWifiSecurityKey = true;
+      invalid = true;
+    }
+    if (invalid) {
+      return false;
+    }
+    if (!this.settings) {
+      return false;
+    }
+    let settings = {
+      wifiEnabled: this.wifiEnabled,
+      wifiNet: this.wifiNet,
+      wifiSecurity: this.wifiSecurity,
+      wifiSecurityKey: this.wifiSecurityKey,
+      autoIP: this.settings.autoIP,
+      ipAddress: this.settings.ipAddress,
+      subnetMask: this.settings.subnetMask,
+      defaultGateway: this.settings.defaultGateway,
+      autoDNS: this.settings.autoDNS,
+      preferredDNSServer: this.settings.preferredDNSServer,
+      alternativeDNSServer: this.settings.alternativeDNSServer
+    };
+    this.base.transferSettings(settings);
   }
 
   onWifiSecurityKeyInput() {

@@ -7,6 +7,8 @@ import { HttpClient } from '@angular/common/http';
 export class BaseService {
   url: string = "http://localhost:3000";
   saving: EventEmitter<any> = new EventEmitter();
+  ethernetSettings: any = null;
+  wifiSettings: any = null;
 
   constructor(private http: HttpClient) { }
 
@@ -15,11 +17,42 @@ export class BaseService {
   }
 
   getSettings() {
+    this.ethernetSettings = null;
+    this.wifiSettings = null;
     this.saving.emit('saving');
+    if (this.ethernetSettings && this.wifiSettings) {
+      let settings = {
+        ethernet: {
+          ...this.ethernetSettings
+        },
+        wifi: {
+          ...this.wifiSettings
+        }
+      }; 
+      
+      this.saveSettings(settings);
+    }
+  }
+
+  transferSettings(settings: any) {
+    if (settings.wifiEnabled !== undefined) {
+      this.wifiSettings = {...settings};
+    } else {
+      this.ethernetSettings = {...settings};
+    }
   }
 
   saveSettings(settings: any) {
-    console.log(settings);
+    this.http.post(`${this.url}/save-settings`, { settings })
+      .subscribe((result: any) => {
+        if (result) {
+          this.saving.emit("saved");
+        }
+      });
+  }
+
+  getLastSettings() {
+    return this.http.get(`${this.url}/last-settings`);
   }
 
   cancel() {
