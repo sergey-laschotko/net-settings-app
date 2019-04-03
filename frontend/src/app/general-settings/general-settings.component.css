@@ -1,32 +1,23 @@
-:host {
-    padding: 20px;
+.radio {
+    margin-right: 10px;
 }
 
-.heading {
+.input-row {
     margin-bottom: 10px;
 }
 
-.wifi-settings {
+.ip-settings, .dns-settings {
+    text-align: right;
     position: relative;
 }
 
-.wifi-settings_backdrop {
+.ip-settings_backdrop, .dns-settings_backdrop {
     position: absolute;
     top: 0;
     right: 0;
     bottom: 0;
     left: 0;
     background: rgba(255, 255, 255, 0.5);
-    z-index: 2;
-}
-
-.wifi-network, .security-key {
-    position: relative;
-    text-align: right;
-}
-
-.input-row {
-    margin-bottom: 10px;
 }
 
 input[type=text] {

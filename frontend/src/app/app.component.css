@@ -1,10 +1,10 @@
 .form {
     width: 90%;
-    max-width: 1200px;
+    max-width: 800px;
     position: absolute;
     top: 40%;
     left: 50%;
-    transform: translate(-50%, -100%);
+    transform: translate(-50%, -50%);
     box-shadow: 2px 2px 5px 2px #333;
 }
 
@@ -27,16 +27,18 @@
 }
 
 .actions_save-btn, .actions_cancel-btn {
-    border: 1px solid rgb(50, 150, 180);
-    color: rgb(50, 150, 180);
+    border: 1px solid #1aa8eb;
+    color: #1aa8eb;
     background: transparent;
     padding: 7px 35px;
     border-radius: 30px;
     margin-right: 10px;
     cursor: pointer;
+    transition: all 0.1s ease-in;
 }
 
-.actions_save-btn {
+.actions_save-btn:hover, .actions_cancel-btn:hover {
     background: rgb(50, 150, 180);
     color: white;
+    transition: all 0.1s ease-in;
 }

@@ -1,3 +1,29 @@
-<p>
-  wifi-settings works!
+<h3 class="heading">Wireless Settings</h3>
+<p class="input-row">
+  <input type="checkbox" name="enableWiFi" />
+  <span>Enable wifi</span>
 </p>
+<div class="wifi-settings">
+  <div class="wifi-settings_backdrop" *ngIf="!enabledWiFi"></div>
+  <div class="wifi-network">
+    <p class="input-row">
+      <label for="wifi-network">Wireless Network Name: <span class="required">*</span></label>
+      <select id="wifi-network" name="wifi-network">
+        <option disabled>Please select</option>
+        <option value="option1">Option1</option>
+        <option value="option2">Option2</option>
+      </select>
+    </p>
+  </div>
+  <p class="input-row">
+    <input type="checkbox" name="securityKey" />
+    <span>Enable Wireless Security:</span>
+  </p>
+  <div class="security-key">
+    <p class="input-row">
+      <label for="security-key">Security Key: <span class="required">*</span></label>
+      <input type="text" name="security-key" id="security-key" />
+    </p>
+  </div>
+  <app-general-settings></app-general-settings>
+</div>
