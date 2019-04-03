@@ -1,43 +1,43 @@
 <p class="input-row">
-  <input type="radio" class="radio" [checked]="autoIP" (click)="toggleIP('auto')" />
-  <span>Obtain an IP address automatically (DHCP/BootP)</span>
+  <span [ngClass]="{ 'radio': true, 'radio__active': autoIP }" (click)="toggleIP('auto')"></span>
+  <span (click)="toggleIP('auto')" class="label">Obtain an IP address automatically (DHCP/BootP)</span>
 </p>
 <p class="input-row">
-  <input type="radio" class="radio" [checked]="!autoIP" (click)="toggleIP('manually')" />
-  <span>Use the following IP address</span>
+  <span [ngClass]="{ 'radio': true, 'radio__active': !autoIP }" (click)="toggleIP('manually')"></span>
+  <span (click)="toggleIP('manually')" class="label">Use the following IP address</span>
 </p>
 <div class="ip-settings">
   <div class="ip-settings_backdrop" *ngIf="autoIP"></div>
   <p class="input-row">
-    <label for="ip-address">IP Address: <span class="required">*</span></label>
-    <input type="text" id="ip-address" name="ip-address" [(ngModel)]="ipAddress" />
+    <label>IP Address: <span class="required">*</span></label>
+    <input [ngClass]="{ 'invalid': emptyIP }" type="text" [(ngModel)]="ipAddress" (ngModelChange)="onIpInput()" />
   </p>
   <p class="input-row">
-    <label for="subnet-mask">Subnet Mask: <span class="required">*</span></label>
-    <input type="text" id="subnet-mask" name="subnet-mask" [(ngModel)]="subnet-mask" />
+    <label>Subnet Mask: <span class="required">*</span></label>
+    <input [ngClass]="{ 'invalid': emptySubnetMask }" type="text" [(ngModel)]="subnetMask" (ngModelChange)="onSubnetMaskInput()" />
   </p>
   <p class="input-row">
-    <label for="ip-address">Default Gateway:</label>
-    <input type="text" id="default-gateway" name="default-gateway" [(ngModel)]="default-gateway" />
+    <label >Default Gateway:</label>
+    <input type="text" [(ngModel)]="defaultGateway" />
   </p>
 </div>
 <p class="input-row">
-  <input type="radio" [checked]="autoDNS" (click)="toggleDNS('auto')" />
-  <span>Obtain DNS server address automatically</span>
+  <span [ngClass]="{ 'radio': true, 'radio__active': autoDNS }" (click)="toggleDNS('auto')"></span>
+  <span (click)="toggleDNS('auto')" class="label">Obtain DNS server address automatically</span>
 </p>
 <p class="input-row">
-  <input type="radio" [checked]="!autoDNS" (click)="toggleDNS('manually')" />
-  <span>Use the following DNS server address</span>
+  <span [ngClass]="{ 'radio': true, 'radio__active': !autoDNS }" (click)="toggleDNS('manually')"></span>
+  <span (click)="toggleDNS('manually')" class="label">Use the following DNS server address</span>
 </p>
 <div class="dns-settings">
   <div class="dns-settings_backdrop" *ngIf="autoDNS"></div>
   <p class="input-row">
-    <label for="preferred-dns">Preferred DNS server: <span class="required">*</span></label>
-    <input type="text" id="preferred-dns" name="preferred-dns" [(ngModel)]="preferredDNS" />
+    <label>Preferred DNS server: <span class="required">*</span></label>
+    <input type="text" [ngClass]="{ 'invalid': emptyPreferredDNSServer }" [(ngModel)]="preferredDNSServer" (ngModelChange)="onPreferredDNSServerInput()" />
   </p>
   <p class="input-row">
-    <label for="alternative-dns">Alternative DNS server:</label>
-    <input type="text" id="alternative-dns" name="alternative-dns" [(ngModel)]="alternativeDNS" />
+    <label>Alternative DNS server:</label>
+    <input type="text" [(ngModel)]="alternativeDNSServer" />
   </p>
 </div>
 

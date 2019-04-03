@@ -1,9 +1,9 @@
-.radio {
-    margin-right: 10px;
-}
-
 .input-row {
     margin-bottom: 10px;
+}
+
+.invalid {
+    border: 1px solid #e73d39;
 }
 
 .ip-settings, .dns-settings {
@@ -24,8 +24,9 @@ input[type=text] {
     padding: 5px;
 }
 
-label {
+label, .label {
     margin-right: 10px;
+    cursor: pointer;
 }
 
 .required {

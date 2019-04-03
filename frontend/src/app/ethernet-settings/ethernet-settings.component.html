@@ -1,2 +1,12 @@
 <h3 class="heading">Ethernet Settings</h3>
-<app-general-settings></app-general-settings>
+<app-general-settings 
+    [autoIP]="autoIP"
+    [ipAddress]="ipAddress"
+    [subnetMask]="subnetMask"
+    [defaultGateway]="defaultGateway"
+    [autoDNS]="autoDNS"
+    [preferredDNSServer]="preferredDNSServer"
+    [alternativeDNSServer]="alternativeDNSServer"
+    (transferSettings)="getSettings($event)"
+>
+</app-general-settings>

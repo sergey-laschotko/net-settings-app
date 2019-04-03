@@ -1,29 +1,53 @@
 <h3 class="heading">Wireless Settings</h3>
 <p class="input-row">
-  <input type="checkbox" name="enableWiFi" />
-  <span>Enable wifi</span>
+  <span [ngClass]="{ 'checkbox': true, 'checkbox__checked': wifiEnabled }" (click)="toggleWifi()"></span>
+  <span (click)="toggleWifi()" class="label">Enable wifi</span>
 </p>
 <div class="wifi-settings">
-  <div class="wifi-settings_backdrop" *ngIf="!enabledWiFi"></div>
+  <div class="wifi-settings_backdrop" *ngIf="!wifiEnabled"></div>
   <div class="wifi-network">
-    <p class="input-row">
-      <label for="wifi-network">Wireless Network Name: <span class="required">*</span></label>
-      <select id="wifi-network" name="wifi-network">
-        <option disabled>Please select</option>
-        <option value="option1">Option1</option>
-        <option value="option2">Option2</option>
-      </select>
-    </p>
+    <div class="input-row">
+      <span class="label">Wireless Network Name: <span class="required">*</span></span>
+      <div [ngClass]="{ 'wifi-select': true, 'invalid': emptyWifiNet }" (click)="toggleWifiVariants()">
+        <span>{{wifiNet || 'Please select'}}</span>
+        <span [ngClass]="{ 'wifi-select_caret': true, 'wifi-select_caret__switched': showWifiVariants }">&lsaquo;</span>
+        <ul class="wifi-variants" *ngIf="showWifiVariants">
+          <li 
+          *ngFor="let variant of wifiVariants" 
+          class="wifi-variants_item"
+          (click)="setWifiNet(variant)"
+          >
+          {{variant.name}}
+          </li>
+        </ul>
+      </div>
+      <img 
+        src="../../assets/images/refresh_icon.svg" 
+        class="wifi-select_refresh" 
+        (click)="getWifies()" />
+    </div>
   </div>
-  <p class="input-row">
-    <input type="checkbox" name="securityKey" />
-    <span>Enable Wireless Security:</span>
-  </p>
-  <div class="security-key">
-    <p class="input-row">
-      <label for="security-key">Security Key: <span class="required">*</span></label>
-      <input type="text" name="security-key" id="security-key" />
-    </p>
+  <div class="input-row">
+    <span [ngClass]="{ 'checkbox': true, 'checkbox__checked': wifiSecurity }" (click)="toggleWifiSecurity()"></span>
+    <span (click)="toggleWifiSecurity()" class="label">Enable Wireless Security:</span>
   </div>
-  <app-general-settings></app-general-settings>
+    <div class="security-key">
+      <div class="wifi-security_backdrop" *ngIf="!wifiSecurity"></div>
+      <p class="input-row">
+        <label>Security Key: <span class="required">*</span></label>
+        <input type="password" [ngClass]="{ 'invalid': emptyWifiSecurityKey }" [(ngModel)]="wifiSecurityKey" (ngModelChange)="onWifiSecurityKeyInput()" />
+      </p>
+    </div>
+  <app-general-settings
+    #generalSettings
+    [autoIP]="autoIP"
+    [ipAddress]="ipAddress"
+    [subnetMask]="subnetMask"
+    [defaultGateway]="defaultGateway"
+    [autoDNS]="autoDNS"
+    [preferredDNSServer]="preferredDNSServer"
+    [alternativeDNSServer]="alternativeDNSServer"
+    (transferSettings)="getSettings($event)"
+  >
+  </app-general-settings>
 </div>

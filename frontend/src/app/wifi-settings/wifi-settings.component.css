@@ -20,23 +20,117 @@
     z-index: 2;
 }
 
+.wifi-select {
+    display: inline-block;
+    position: relative;
+    padding: 5px;
+    border: 1px solid #777;
+    width: 172px;
+    text-align: left;
+    cursor: pointer;
+}
+
+.wifi-select_caret {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: absolute;
+    top: -1px;
+    right: -1px;
+    width: 27px;
+    height: 27px;
+    cursor: pointer;
+    font-size: 1.2em;
+    font-weight: bold;
+    border: 1px solid #777;
+    -webkit-transform: rotate(270deg);
+    transform: rotate(270deg);
+    transition: transform 0.2s ease-in-out;
+}
+
+.wifi-select_caret__switched {
+    -webkit-transform: rotate(90deg);
+    transform: rotate(90deg);
+    transition: transform 0.2s ease-in-out;
+}
+
+.wifi-select_refresh {
+    display: inline-block;
+    width: 27px;
+    height: 27px;
+    border: 1px solid rgb(50, 150, 180);
+    border-radius: 100%;
+    position: relative;
+    top: 9px;
+    margin-left: 5px;
+    cursor: pointer;
+    transition: transform 0.2s ease-in-out;
+}
+
+.wifi-select_refresh path {
+    fill: rgb(50, 150, 180);
+}
+
+.wifi-variants {
+    display: block;
+    width: 100%;
+    background: white;
+    border: 1px solid #777;
+    position: absolute;
+    top: 105%;
+    left: 0;
+    list-style-type: none;
+    z-index: 2;
+}
+
+.wifi-variants_item {
+    display: flex;
+    justify-content: space-between;
+    padding: 10px 5px;
+    transition: all 0.1s ease-in-out;
+}
+
+.wifi-variants_item:hover {
+    color: white;
+    background: rgb(50, 150, 180);
+    transition: all 0.1s ease-in-out;
+}
+
 .wifi-network, .security-key {
     position: relative;
     text-align: right;
+}
+
+.security-key {
+    position: relative;
+}
+
+.wifi-security_backdrop {
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    background: rgba(255, 255, 255, 0.5);
 }
 
 .input-row {
     margin-bottom: 10px;
 }
 
-input[type=text] {
+input[type=text], input[type=password] {
     padding: 5px;
 }
 
-label {
+label, .label {
     margin-right: 10px;
+    cursor: pointer;
 }
 
 .required {
     color: #e73d39;
+}
+
+.invalid {
+    border: 1px solid #e73d39;
 }

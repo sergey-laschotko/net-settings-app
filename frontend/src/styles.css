@@ -8,6 +8,75 @@
     font-size: 0.98em;
 }
 
+html, body {
+    height: 100%;
+}
+
 *:focus, *:active {
     outline: none;
+}
+
+.radio {
+    display: inline-block;
+    width: 20px;
+    height: 20px;
+    border: 1px solid #777;
+    border-radius: 100%;
+    margin-right: 10px;
+    position: relative;
+    top: 5px;
+    transition: border 0.2s ease-in-out;
+}
+
+.radio__active {
+    border: 6px solid rgb(50, 150, 180);
+    transition: border 0.2s ease-in-out;
+}
+
+.checkbox {
+    display: inline-block;
+    width: 20px;
+    height: 20px;
+    border: 1px solid #777;
+    border-radius: 3px;
+    margin-right: 10px;
+    background: transparent;
+    position: relative;
+    top: 5px;
+    transition: all 0.2s ease-in-out;
+}
+
+.checkbox__checked {
+    background: rgb(50, 150, 180);
+    border: 1px solid rgb(50, 150, 180);
+    position: relative;
+    transition: all 0.2s ease-in-out;
+}
+
+.checkbox__checked:before {
+    content: "";
+    display: block;
+    position: absolute;
+    top: 8px;
+    left: 2px;
+    width: 7px;
+    height: 3px;
+    background: white;
+    border-radius: 5px;
+    -webkit-transform: rotate(45deg);
+    transform: rotate(45deg);
+}
+
+.checkbox__checked:after {
+    content: "";
+    display: block;
+    position: absolute;
+    top: 7px;
+    left: 5px;
+    width: 13px;
+    height: 3px;
+    background: white;
+    border-radius: 5px;
+    -webkit-transform: rotate(315deg);
+    transform: rotate(315deg);
 }
