@@ -2,6 +2,18 @@ const express = require("express");
 const bodyParser = require("body-parser");
 const cors = require("cors");
 const fs = require("fs");
+const mongoose = require("mongoose");
+
+const Settings = require("./models/settings");
+
+mongoose.connect("mongodb://localhost/testform", { useNewUrlParser: true })
+    .then(() => {
+        console.log("Connected to MongoDB");
+    })
+    .catch(e => {
+        console.log(e.message);
+    });
+
 
 const server = express();
 const port = process.env.PORT || 3000;
@@ -23,6 +35,27 @@ server.get("/wifi-nets", async (req, res) => {
             res.json(JSON.parse(result));
         }
     });
+});
+
+server.post("/save-settings", (req, res) => {
+    const settings = req.body.settings;
+    const savingSettings = new Settings(settings);
+    savingSettings.save((err) => {
+        if (err) {
+            res.status(500).json(false);
+        }
+        res.status(200).json(true);
+    });
+});
+
+server.get("/last-settings", (req, res) => {
+    Settings.findOne().sort({ createdAt: -1 })
+        .then((results) => {
+            res.json(results);
+        })
+        .catch(e => {
+            res.status(500).json(false);
+        })
 });
 
 server.listen(port, () => {
