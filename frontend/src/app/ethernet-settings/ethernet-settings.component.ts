@@ -25,6 +25,9 @@ export class EthernetSettingsComponent implements OnInit {
     this.base.getLastSettings()
       .subscribe((result: any) => {
         if (result) {
+          if (result.error) {
+            return;
+          }
           this.autoIP = result.ethernet.autoIP;
           this.ipAddress = result.ethernet.ipAddress;
           this.subnetMask = result.ethernet.subnetMask;

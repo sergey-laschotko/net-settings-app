@@ -5,13 +5,16 @@ const fs = require("fs");
 const mongoose = require("mongoose");
 
 const Settings = require("./models/settings");
+let connection = false;
 
 mongoose.connect("mongodb://localhost/testform", { useNewUrlParser: true })
     .then(() => {
         console.log("Connected to MongoDB");
+        connection = true;
     })
     .catch(e => {
         console.log(e.message);
+        connection = false;
     });
 
 
@@ -38,6 +41,9 @@ server.get("/wifi-nets", async (req, res) => {
 });
 
 server.post("/save-settings", (req, res) => {
+    if (!connection) {
+        res.status(200).json({"error": "Not connected to database"})
+    }
     const settings = req.body.settings;
     const savingSettings = new Settings(settings);
     savingSettings.save((err) => {
@@ -49,6 +55,9 @@ server.post("/save-settings", (req, res) => {
 });
 
 server.get("/last-settings", (req, res) => {
+    if (!connection) {
+        res.status(200).json({"error": "Not connected to database"});
+    }
     Settings.findOne().sort({ createdAt: -1 })
         .then((results) => {
             res.json(results);

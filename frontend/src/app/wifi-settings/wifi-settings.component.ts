@@ -66,6 +66,9 @@ export class WifiSettingsComponent implements OnInit {
     this.base.getLastSettings()
       .subscribe((result: any) => {
         if (result) {
+          if (result.error) {
+            return;
+          }
           this.wifiEnabled = result.wifi.wifiEnabled;
           this.wifiNet = result.wifi.wifiNet;
           this.wifiSecurity = result.wifi.wifiSecurity;

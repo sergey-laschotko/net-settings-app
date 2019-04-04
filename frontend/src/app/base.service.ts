@@ -46,6 +46,10 @@ export class BaseService {
     this.http.post(`${this.url}/save-settings`, { settings })
       .subscribe((result: any) => {
         if (result) {
+          if (result.error == "Not connected to database") {
+            this.saving.emit("Not connected to database");
+            return;
+          }
           this.saving.emit("saved");
         }
       });
